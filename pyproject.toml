@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["promptgate*", "evals*"]
+
+[project]
+name = "promptgate"
+version = "0.1.0"
+description = "A production CI/CD evaluation pipeline for LLM prompts with deterministic checks, LLM-as-judge, bootstrap confidence intervals, and merge-blocking regression gates."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    {name = "PromptGate Contributors"}
+]
+dependencies = [
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0",
+    "rich>=13.0.0",
+    "typer>=0.9.0",
+    "scipy>=1.10.0",
+    "numpy>=1.24.0",
+    "scikit-learn>=1.2.0",
+    "jinja2>=3.1.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0"
+]
+providers = [
+    "google-genai>=1.0.0",
+    "openai>=1.0.0"
+]
+
+[project.scripts]
+promptgate = "promptgate.cli:app"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+pythonpath = ["."]
