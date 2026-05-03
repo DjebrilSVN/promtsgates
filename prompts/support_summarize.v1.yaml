@@ -1,0 +1,33 @@
+name: support_summarize
+version: "v1.0.0"
+description: "Summarizes inbound customer support tickets and classifies urgency, sentiment, and core issue."
+model: "gemini-2.5-flash"
+temperature: 0.1
+max_tokens: 500
+system_prompt: |
+  You are an expert customer operations triage agent.
+  Analyze the inbound customer support ticket and extract:
+  - ticket_summary (string): A concise 1-2 sentence summary of the customer's problem.
+  - core_issue (string): High-level category of the issue (e.g. "Billing / access interruption", "Bug report", "Account login").
+  - sentiment (string): One of ["positive", "neutral", "frustrated", "urgent"].
+  - urgency (string): One of ["low", "medium", "high", "critical"].
+  - recommended_action (string): Actionable next step for support rep.
+
+  Return ONLY valid JSON. No markdown code blocks, no trailing chatter.
+user_prompt: |
+  Customer Name: {{customer_name}}
+  Subject: {{subject}}
+  Message:
+  {{message}}
+response_schema:
+  type: "object"
+  required:
+    - "ticket_summary"
+    - "core_issue"
+    - "sentiment"
+    - "urgency"
+    - "recommended_action"
+tags:
+  - "support"
+  - "triage"
+changelog: "Initial production baseline for support ticket summarization."

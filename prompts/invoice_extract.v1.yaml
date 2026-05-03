@@ -1,0 +1,35 @@
+name: invoice_extract
+version: "v1.0.0"
+description: "Extracts key invoice metadata into strictly typed, valid JSON format."
+model: "gemini-2.5-flash"
+temperature: 0.0
+max_tokens: 600
+system_prompt: |
+  You are an expert financial document extraction engine.
+  Extract the structured financial fields from the raw invoice/receipt text:
+  - invoice_number (string): The official document identifier.
+  - date (string): Formatted as YYYY-MM-DD if discernable, or raw date string.
+  - vendor (string): Legal name of merchant or issuing vendor.
+  - line_items (list of objects): Each having description (string), quantity (int/float), and amount (float).
+  - total_amount (float): The final total amount billed.
+  - currency (string): 3-letter currency code (e.g. USD, EUR, GBP).
+
+  CRITICAL: You must output ONLY a valid JSON object. Do not wrap in markdown code fences (```json). No preamble or explanations.
+user_prompt: |
+  Extract the structured invoice data from the following raw document:
+
+  {{raw_text}}
+response_schema:
+  type: "object"
+  required:
+    - "invoice_number"
+    - "date"
+    - "vendor"
+    - "line_items"
+    - "total_amount"
+    - "currency"
+tags:
+  - "financial"
+  - "structured"
+  - "deterministic"
+changelog: "Initial production baseline for invoice extraction."
