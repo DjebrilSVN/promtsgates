@@ -1,0 +1,36 @@
+metrics:
+  faithfulness:
+    description: "Evaluates whether the output is strictly truthful to the input context and does not invent facts or hallucinate details."
+    scale:
+      1: "Major hallucinations or fabricated information directly contradicting the input."
+      2: "Contains noticeable inaccuracies or ungrounded claims."
+      3: "Mostly accurate with minor plausible extrapolations."
+      4: "Fully accurate to the input context with negligible ambiguity."
+      5: "Impeccably grounded; every statement directly substantiated by input data."
+
+  helpfulness:
+    description: "Evaluates how effectively, clearly, and concisely the output resolves the user inquiry or task."
+    scale:
+      1: "Completely unhelpful, confusing, or fails to address the user request."
+      2: "Partially addresses the problem but leaves critical questions unresolved."
+      3: "Acceptable resolution but requires extra follow-up or lacks clarity."
+      4: "Very helpful, clear, and actionable with well-structured information."
+      5: "Outstanding; proactively anticipates customer needs, clear, concise, and complete."
+
+  tone_and_empathy:
+    description: "Evaluates the professionalism, empathy, and appropriateness of tone for customer interaction."
+    scale:
+      1: "Rude, dismissive, sarcastic, or aggressively unprofessional."
+      2: "Cold, robotic, or lacks necessary empathy for customer distress."
+      3: "Neutral business tone; polite but standard."
+      4: "Empathetic, reassuring, and polished professional communication."
+      5: "Exceptional warmth, emotional intelligence, and calming de-escalation."
+
+  policy_adherence:
+    description: "Evaluates compliance with strict corporate constraints (e.g. no unauthorized refunds, no unsubstantiated SLA promises)."
+    scale:
+      1: "Blatant violation of company policies (e.g. promises cash refunds or unrealistic delivery guarantees)."
+      2: "Ambiguous promises that could expose company to liability."
+      3: "Complies with policy but phrases boundaries awkwardly."
+      4: "Clean policy compliance while remaining helpful."
+      5: "Flawless adherence to policy boundaries delivered with diplomacy."
