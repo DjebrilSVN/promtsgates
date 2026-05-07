@@ -1,0 +1,3643 @@
+{
+  "prompt_name": "invoice_extract",
+  "prompt_version": "v1.0.0",
+  "prompt_hash": "c34202c72e4f6c2a",
+  "timestamp": "2026-10-21T01:02:01.101809+00:00",
+  "case_evaluations": [
+    {
+      "test_case_id": "inv_case_001",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Acme Global Solutions\nInvoice Number: INV-2024-1001\nDate of Issue: 2024-10-11\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $263.49 | Total: $263.49 USD\n-----------------------------------------\nTOTAL DUE: $263.49 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1001",
+        "vendor": "Acme Global Solutions",
+        "total_amount": 263.49,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "7d36e664e3a5dffe",
+          "test_case_id": "inv_case_001",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 263.49\n    }\n  ],\n  \"total_amount\": 263.49,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 263.49
+              }
+            ],
+            "total_amount": 263.49,
+            "currency": "USD"
+          },
+          "latency_ms": 45.53071975708008,
+          "prompt_tokens": 289,
+          "completion_tokens": 65,
+          "cost_usd": 0.000041175,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1001', got 'INV-2024', Key 'vendor': expected 'Acme Global Solutions', got 'Acme Global'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.5ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 354 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_002",
+      "input": {
+        "raw_text": "INVOICE\nVendor: TechCorp Cloud Services\nInvoice Number: INV-2024-1002\nDate of Issue: 2024-10-12\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $1277.00 | Total: $1277.00 USD\n-----------------------------------------\nTOTAL DUE: $1277.00 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1002",
+        "vendor": "TechCorp Cloud Services",
+        "total_amount": 1277.0,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "a6ceaee96766acb1",
+          "test_case_id": "inv_case_002",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"TechCorp\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 1277.0\n    }\n  ],\n  \"total_amount\": 1277.0,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "TechCorp",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 1277.0
+              }
+            ],
+            "total_amount": 1277.0,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 290,
+          "completion_tokens": 65,
+          "cost_usd": 0.00004125,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1002', got 'INV-2024', Key 'vendor': expected 'TechCorp Cloud Services', got 'TechCorp'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 355 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_003",
+      "input": {
+        "raw_text": "INVOICE\nVendor: CloudHost Inc\nInvoice Number: INV-2024-1003\nDate of Issue: 2024-10-13\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $130.00 | Total: $130.00 EUR\n-----------------------------------------\nTOTAL DUE: $130.00 EUR\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1003",
+        "vendor": "CloudHost Inc",
+        "total_amount": 130.0,
+        "currency": "EUR"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "5646dc599365d5e2",
+          "test_case_id": "inv_case_003",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"CloudHost Inc\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 130.0\n    }\n  ],\n  \"total_amount\": 130.0,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "CloudHost Inc",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 130.0
+              }
+            ],
+            "total_amount": 130.0,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 287,
+          "completion_tokens": 65,
+          "cost_usd": 0.000041024999999999994,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1003', got 'INV-2024', Key 'currency': expected 'EUR', got 'USD'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 352 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_004",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Stripe Payments Europe\nInvoice Number: INV-2024-1004\nDate of Issue: 2024-10-14\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $466.30 | Total: $466.30 GBP\n-----------------------------------------\nTOTAL DUE: $466.30 GBP\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1004",
+        "vendor": "Stripe Payments Europe",
+        "total_amount": 466.3,
+        "currency": "GBP"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "203f32a6fd440776",
+          "test_case_id": "inv_case_004",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Stripe\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 466.3\n    }\n  ],\n  \"total_amount\": 466.3,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Stripe",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 466.3
+              }
+            ],
+            "total_amount": 466.3,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 289,
+          "completion_tokens": 64,
+          "cost_usd": 0.00004087499999999999,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.25,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1004', got 'INV-2024', Key 'vendor': expected 'Stripe Payments Europe', got 'Stripe', Key 'currency': expected 'GBP', got 'USD'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 353 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_005",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Amazon AWS EMEA\nInvoice Number: INV-2024-1005\nDate of Issue: 2024-10-15\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $3518.25 | Total: $3518.25 USD\n-----------------------------------------\nTOTAL DUE: $3518.25 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1005",
+        "vendor": "Amazon AWS EMEA",
+        "total_amount": 3518.25,
+        "currency": "USD"
+      },
+      "tags": [
+        "edge-case"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "0b9dc6aeee2c3130",
+          "test_case_id": "inv_case_005",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Amazon AWS\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 3518.25\n    }\n  ],\n  \"total_amount\": 3518.25,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Amazon AWS",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 3518.25
+              }
+            ],
+            "total_amount": 3518.25,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 288,
+          "completion_tokens": 66,
+          "cost_usd": 0.0000414,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1005', got 'INV-2024', Key 'vendor': expected 'Amazon AWS EMEA', got 'Amazon AWS'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 354 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_006",
+      "input": {
+        "raw_text": "INVOICE\nVendor: OfficeSupplies Co\nInvoice Number: INV-2024-1006\nDate of Issue: 2024-10-16\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $226.20 | Total: $226.20 USD\n-----------------------------------------\nTOTAL DUE: $226.20 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1006",
+        "vendor": "OfficeSupplies Co",
+        "total_amount": 226.2,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "9f82ac440db4286f",
+          "test_case_id": "inv_case_006",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"OfficeSupplies Co\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 226.2\n    }\n  ],\n  \"total_amount\": 226.2,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "OfficeSupplies Co",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 226.2
+              }
+            ],
+            "total_amount": 226.2,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 288,
+          "completion_tokens": 66,
+          "cost_usd": 0.0000414,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.75,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1006', got 'INV-2024'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 354 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_007",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Datadog Monitoring\nInvoice Number: INV-2024-1007\nDate of Issue: 2024-10-17\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $894.50 | Total: $894.50 USD\n-----------------------------------------\nTOTAL DUE: $894.50 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1007",
+        "vendor": "Datadog Monitoring",
+        "total_amount": 894.5,
+        "currency": "USD"
+      },
+      "tags": [
+        "adversarial"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "41d799a557429da7",
+          "test_case_id": "inv_case_007",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global Solutions\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 894.5\n    }\n  ],\n  \"total_amount\": 894.5,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global Solutions",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 894.5
+              }
+            ],
+            "total_amount": 894.5,
+            "currency": "USD"
+          },
+          "latency_ms": 45.99754333496094,
+          "prompt_tokens": 288,
+          "completion_tokens": 67,
+          "cost_usd": 0.0000417,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1007', got 'INV-2024', Key 'vendor': expected 'Datadog Monitoring', got 'Acme Global Solutions'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 46.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 355 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_008",
+      "input": {
+        "raw_text": "INVOICE\nVendor: GitHub Enterprise\nInvoice Number: INV-2024-1008\nDate of Issue: 2024-10-18\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $2208.00 | Total: $2208.00 USD\n-----------------------------------------\nTOTAL DUE: $2208.00 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1008",
+        "vendor": "GitHub Enterprise",
+        "total_amount": 2208.0,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "3116c3e2c947ba20",
+          "test_case_id": "inv_case_008",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global Solutions\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 2208.0\n    }\n  ],\n  \"total_amount\": 2208.0,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global Solutions",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 2208.0
+              }
+            ],
+            "total_amount": 2208.0,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 289,
+          "completion_tokens": 68,
+          "cost_usd": 0.00004207499999999999,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1008', got 'INV-2024', Key 'vendor': expected 'GitHub Enterprise', got 'Acme Global Solutions'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 357 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_009",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Figma Design Systems\nInvoice Number: INV-2024-1009\nDate of Issue: 2024-10-19\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $481.50 | Total: $481.50 USD\n-----------------------------------------\nTOTAL DUE: $481.50 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1009",
+        "vendor": "Figma Design Systems",
+        "total_amount": 481.5,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "b0531912e629a5d8",
+          "test_case_id": "inv_case_009",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global Solutions\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 481.5\n    }\n  ],\n  \"total_amount\": 481.5,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global Solutions",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 481.5
+              }
+            ],
+            "total_amount": 481.5,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 289,
+          "completion_tokens": 67,
+          "cost_usd": 0.000041775,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1009', got 'INV-2024', Key 'vendor': expected 'Figma Design Systems', got 'Acme Global Solutions'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 356 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_010",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Slack Technologies\nInvoice Number: INV-2024-1010\nDate of Issue: 2024-10-20\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $615.00 | Total: $615.00 USD\n-----------------------------------------\nTOTAL DUE: $615.00 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1010",
+        "vendor": "Slack Technologies",
+        "total_amount": 615.0,
+        "currency": "USD"
+      },
+      "tags": [
+        "edge-case"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "3ede685c773b9de0",
+          "test_case_id": "inv_case_010",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global Solutions\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 615.0\n    }\n  ],\n  \"total_amount\": 615.0,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global Solutions",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 615.0
+              }
+            ],
+            "total_amount": 615.0,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 288,
+          "completion_tokens": 67,
+          "cost_usd": 0.0000417,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1010', got 'INV-2024', Key 'vendor': expected 'Slack Technologies', got 'Acme Global Solutions'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 355 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_011",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Acme Global Solutions\nInvoice Number: INV-2024-1011\nDate of Issue: 2024-10-21\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $398.49 | Total: $398.49 USD\n-----------------------------------------\nTOTAL DUE: $398.49 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1011",
+        "vendor": "Acme Global Solutions",
+        "total_amount": 398.49,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "ce7d07a1f8b75a71",
+          "test_case_id": "inv_case_011",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 398.49\n    }\n  ],\n  \"total_amount\": 398.49,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 398.49
+              }
+            ],
+            "total_amount": 398.49,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 289,
+          "completion_tokens": 65,
+          "cost_usd": 0.000041175,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1011', got 'INV-2024', Key 'vendor': expected 'Acme Global Solutions', got 'Acme Global'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 354 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_012",
+      "input": {
+        "raw_text": "INVOICE\nVendor: TechCorp Cloud Services\nInvoice Number: INV-2024-1012\nDate of Issue: 2024-10-22\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $1412.00 | Total: $1412.00 USD\n-----------------------------------------\nTOTAL DUE: $1412.00 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1012",
+        "vendor": "TechCorp Cloud Services",
+        "total_amount": 1412.0,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "1f9305f9da3c549f",
+          "test_case_id": "inv_case_012",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"TechCorp\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 1412.0\n    }\n  ],\n  \"total_amount\": 1412.0,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "TechCorp",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 1412.0
+              }
+            ],
+            "total_amount": 1412.0,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 290,
+          "completion_tokens": 65,
+          "cost_usd": 0.00004125,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1012', got 'INV-2024', Key 'vendor': expected 'TechCorp Cloud Services', got 'TechCorp'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 355 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_013",
+      "input": {
+        "raw_text": "INVOICE\nVendor: CloudHost Inc\nInvoice Number: INV-2024-1013\nDate of Issue: 2024-10-23\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $265.00 | Total: $265.00 EUR\n-----------------------------------------\nTOTAL DUE: $265.00 EUR\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1013",
+        "vendor": "CloudHost Inc",
+        "total_amount": 265.0,
+        "currency": "EUR"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "8204cfe5fe11b2fb",
+          "test_case_id": "inv_case_013",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"CloudHost Inc\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 265.0\n    }\n  ],\n  \"total_amount\": 265.0,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "CloudHost Inc",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 265.0
+              }
+            ],
+            "total_amount": 265.0,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 287,
+          "completion_tokens": 65,
+          "cost_usd": 0.000041024999999999994,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1013', got 'INV-2024', Key 'currency': expected 'EUR', got 'USD'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 352 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_014",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Stripe Payments Europe\nInvoice Number: INV-2024-1014\nDate of Issue: 2024-10-24\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $601.30 | Total: $601.30 GBP\n-----------------------------------------\nTOTAL DUE: $601.30 GBP\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1014",
+        "vendor": "Stripe Payments Europe",
+        "total_amount": 601.3,
+        "currency": "GBP"
+      },
+      "tags": [
+        "adversarial"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "81b2bc774add7251",
+          "test_case_id": "inv_case_014",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Stripe\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 601.3\n    }\n  ],\n  \"total_amount\": 601.3,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Stripe",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 601.3
+              }
+            ],
+            "total_amount": 601.3,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 289,
+          "completion_tokens": 64,
+          "cost_usd": 0.00004087499999999999,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.25,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1014', got 'INV-2024', Key 'vendor': expected 'Stripe Payments Europe', got 'Stripe', Key 'currency': expected 'GBP', got 'USD'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 353 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_015",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Amazon AWS EMEA\nInvoice Number: INV-2024-1015\nDate of Issue: 2024-10-10\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $3653.25 | Total: $3653.25 USD\n-----------------------------------------\nTOTAL DUE: $3653.25 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1015",
+        "vendor": "Amazon AWS EMEA",
+        "total_amount": 3653.25,
+        "currency": "USD"
+      },
+      "tags": [
+        "edge-case"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "503eba178cf96393",
+          "test_case_id": "inv_case_015",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Amazon AWS\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 3653.25\n    }\n  ],\n  \"total_amount\": 3653.25,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Amazon AWS",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 3653.25
+              }
+            ],
+            "total_amount": 3653.25,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 288,
+          "completion_tokens": 66,
+          "cost_usd": 0.0000414,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1015', got 'INV-2024', Key 'vendor': expected 'Amazon AWS EMEA', got 'Amazon AWS'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 354 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_016",
+      "input": {
+        "raw_text": "INVOICE\nVendor: OfficeSupplies Co\nInvoice Number: INV-2024-1016\nDate of Issue: 2024-10-11\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $361.20 | Total: $361.20 USD\n-----------------------------------------\nTOTAL DUE: $361.20 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1016",
+        "vendor": "OfficeSupplies Co",
+        "total_amount": 361.2,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "b559717dfa337c93",
+          "test_case_id": "inv_case_016",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"OfficeSupplies Co\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 361.2\n    }\n  ],\n  \"total_amount\": 361.2,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "OfficeSupplies Co",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 361.2
+              }
+            ],
+            "total_amount": 361.2,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 288,
+          "completion_tokens": 66,
+          "cost_usd": 0.0000414,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.75,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1016', got 'INV-2024'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 354 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_017",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Datadog Monitoring\nInvoice Number: INV-2024-1017\nDate of Issue: 2024-10-12\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $1029.50 | Total: $1029.50 USD\n-----------------------------------------\nTOTAL DUE: $1029.50 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1017",
+        "vendor": "Datadog Monitoring",
+        "total_amount": 1029.5,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "6bd47cd37e205665",
+          "test_case_id": "inv_case_017",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global Solutions\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 1029.5\n    }\n  ],\n  \"total_amount\": 1029.5,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global Solutions",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 1029.5
+              }
+            ],
+            "total_amount": 1029.5,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 289,
+          "completion_tokens": 68,
+          "cost_usd": 0.00004207499999999999,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1017', got 'INV-2024', Key 'vendor': expected 'Datadog Monitoring', got 'Acme Global Solutions'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 357 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_018",
+      "input": {
+        "raw_text": "INVOICE\nVendor: GitHub Enterprise\nInvoice Number: INV-2024-1018\nDate of Issue: 2024-10-13\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $2343.00 | Total: $2343.00 USD\n-----------------------------------------\nTOTAL DUE: $2343.00 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1018",
+        "vendor": "GitHub Enterprise",
+        "total_amount": 2343.0,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "a1a5e13deb1c0034",
+          "test_case_id": "inv_case_018",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global Solutions\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 2343.0\n    }\n  ],\n  \"total_amount\": 2343.0,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global Solutions",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 2343.0
+              }
+            ],
+            "total_amount": 2343.0,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 289,
+          "completion_tokens": 68,
+          "cost_usd": 0.00004207499999999999,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1018', got 'INV-2024', Key 'vendor': expected 'GitHub Enterprise', got 'Acme Global Solutions'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 357 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_019",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Figma Design Systems\nInvoice Number: INV-2024-1019\nDate of Issue: 2024-10-14\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $616.50 | Total: $616.50 USD\n-----------------------------------------\nTOTAL DUE: $616.50 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1019",
+        "vendor": "Figma Design Systems",
+        "total_amount": 616.5,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "ff1cbd92c1321938",
+          "test_case_id": "inv_case_019",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global Solutions\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 616.5\n    }\n  ],\n  \"total_amount\": 616.5,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global Solutions",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 616.5
+              }
+            ],
+            "total_amount": 616.5,
+            "currency": "USD"
+          },
+          "latency_ms": 45.99897384643555,
+          "prompt_tokens": 289,
+          "completion_tokens": 67,
+          "cost_usd": 0.000041775,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1019', got 'INV-2024', Key 'vendor': expected 'Figma Design Systems', got 'Acme Global Solutions'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 46.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 356 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_020",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Slack Technologies\nInvoice Number: INV-2024-1020\nDate of Issue: 2024-10-15\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $750.00 | Total: $750.00 USD\n-----------------------------------------\nTOTAL DUE: $750.00 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1020",
+        "vendor": "Slack Technologies",
+        "total_amount": 750.0,
+        "currency": "USD"
+      },
+      "tags": [
+        "edge-case"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "428de18ee2a6a774",
+          "test_case_id": "inv_case_020",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global Solutions\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 750.0\n    }\n  ],\n  \"total_amount\": 750.0,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global Solutions",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 750.0
+              }
+            ],
+            "total_amount": 750.0,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 288,
+          "completion_tokens": 67,
+          "cost_usd": 0.0000417,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1020', got 'INV-2024', Key 'vendor': expected 'Slack Technologies', got 'Acme Global Solutions'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 355 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_021",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Acme Global Solutions\nInvoice Number: INV-2024-1021\nDate of Issue: 2024-10-16\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $533.49 | Total: $533.49 USD\n-----------------------------------------\nTOTAL DUE: $533.49 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1021",
+        "vendor": "Acme Global Solutions",
+        "total_amount": 533.49,
+        "currency": "USD"
+      },
+      "tags": [
+        "adversarial"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "e535dd5f86c7c552",
+          "test_case_id": "inv_case_021",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 533.49\n    }\n  ],\n  \"total_amount\": 533.49,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 533.49
+              }
+            ],
+            "total_amount": 533.49,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 289,
+          "completion_tokens": 65,
+          "cost_usd": 0.000041175,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1021', got 'INV-2024', Key 'vendor': expected 'Acme Global Solutions', got 'Acme Global'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 354 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_022",
+      "input": {
+        "raw_text": "INVOICE\nVendor: TechCorp Cloud Services\nInvoice Number: INV-2024-1022\nDate of Issue: 2024-10-17\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $1547.00 | Total: $1547.00 USD\n-----------------------------------------\nTOTAL DUE: $1547.00 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1022",
+        "vendor": "TechCorp Cloud Services",
+        "total_amount": 1547.0,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "285cc5700f647c31",
+          "test_case_id": "inv_case_022",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"TechCorp\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 1547.0\n    }\n  ],\n  \"total_amount\": 1547.0,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "TechCorp",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 1547.0
+              }
+            ],
+            "total_amount": 1547.0,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 290,
+          "completion_tokens": 65,
+          "cost_usd": 0.00004125,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1022', got 'INV-2024', Key 'vendor': expected 'TechCorp Cloud Services', got 'TechCorp'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 355 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_023",
+      "input": {
+        "raw_text": "INVOICE\nVendor: CloudHost Inc\nInvoice Number: INV-2024-1023\nDate of Issue: 2024-10-18\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $400.00 | Total: $400.00 EUR\n-----------------------------------------\nTOTAL DUE: $400.00 EUR\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1023",
+        "vendor": "CloudHost Inc",
+        "total_amount": 400.0,
+        "currency": "EUR"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "389d13521bae204c",
+          "test_case_id": "inv_case_023",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"CloudHost Inc\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 400.0\n    }\n  ],\n  \"total_amount\": 400.0,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "CloudHost Inc",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 400.0
+              }
+            ],
+            "total_amount": 400.0,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 287,
+          "completion_tokens": 65,
+          "cost_usd": 0.000041024999999999994,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1023', got 'INV-2024', Key 'currency': expected 'EUR', got 'USD'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 352 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_024",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Stripe Payments Europe\nInvoice Number: INV-2024-1024\nDate of Issue: 2024-10-19\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $736.30 | Total: $736.30 GBP\n-----------------------------------------\nTOTAL DUE: $736.30 GBP\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1024",
+        "vendor": "Stripe Payments Europe",
+        "total_amount": 736.3,
+        "currency": "GBP"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "c7f0488172467ed6",
+          "test_case_id": "inv_case_024",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Stripe\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 736.3\n    }\n  ],\n  \"total_amount\": 736.3,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Stripe",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 736.3
+              }
+            ],
+            "total_amount": 736.3,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 289,
+          "completion_tokens": 64,
+          "cost_usd": 0.00004087499999999999,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.25,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1024', got 'INV-2024', Key 'vendor': expected 'Stripe Payments Europe', got 'Stripe', Key 'currency': expected 'GBP', got 'USD'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 353 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_025",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Amazon AWS EMEA\nInvoice Number: INV-2024-1025\nDate of Issue: 2024-10-20\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $3788.25 | Total: $3788.25 USD\n-----------------------------------------\nTOTAL DUE: $3788.25 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1025",
+        "vendor": "Amazon AWS EMEA",
+        "total_amount": 3788.25,
+        "currency": "USD"
+      },
+      "tags": [
+        "edge-case"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "c1f39ba5cb5a47a2",
+          "test_case_id": "inv_case_025",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Amazon AWS\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 3788.25\n    }\n  ],\n  \"total_amount\": 3788.25,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Amazon AWS",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 3788.25
+              }
+            ],
+            "total_amount": 3788.25,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 288,
+          "completion_tokens": 66,
+          "cost_usd": 0.0000414,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1025', got 'INV-2024', Key 'vendor': expected 'Amazon AWS EMEA', got 'Amazon AWS'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 354 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_026",
+      "input": {
+        "raw_text": "INVOICE\nVendor: OfficeSupplies Co\nInvoice Number: INV-2024-1026\nDate of Issue: 2024-10-21\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $496.20 | Total: $496.20 USD\n-----------------------------------------\nTOTAL DUE: $496.20 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1026",
+        "vendor": "OfficeSupplies Co",
+        "total_amount": 496.2,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "2e1529693a1cde64",
+          "test_case_id": "inv_case_026",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"OfficeSupplies Co\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 496.2\n    }\n  ],\n  \"total_amount\": 496.2,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "OfficeSupplies Co",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 496.2
+              }
+            ],
+            "total_amount": 496.2,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 288,
+          "completion_tokens": 66,
+          "cost_usd": 0.0000414,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.75,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1026', got 'INV-2024'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 354 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_027",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Datadog Monitoring\nInvoice Number: INV-2024-1027\nDate of Issue: 2024-10-22\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $1164.50 | Total: $1164.50 USD\n-----------------------------------------\nTOTAL DUE: $1164.50 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1027",
+        "vendor": "Datadog Monitoring",
+        "total_amount": 1164.5,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "d2c63ff11a8931ef",
+          "test_case_id": "inv_case_027",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global Solutions\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 1164.5\n    }\n  ],\n  \"total_amount\": 1164.5,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global Solutions",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 1164.5
+              }
+            ],
+            "total_amount": 1164.5,
+            "currency": "USD"
+          },
+          "latency_ms": 46.00064277648926,
+          "prompt_tokens": 289,
+          "completion_tokens": 68,
+          "cost_usd": 0.00004207499999999999,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1027', got 'INV-2024', Key 'vendor': expected 'Datadog Monitoring', got 'Acme Global Solutions'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 46.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 357 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_028",
+      "input": {
+        "raw_text": "INVOICE\nVendor: GitHub Enterprise\nInvoice Number: INV-2024-1028\nDate of Issue: 2024-10-23\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $2478.00 | Total: $2478.00 USD\n-----------------------------------------\nTOTAL DUE: $2478.00 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1028",
+        "vendor": "GitHub Enterprise",
+        "total_amount": 2478.0,
+        "currency": "USD"
+      },
+      "tags": [
+        "adversarial"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "f5f739c247547985",
+          "test_case_id": "inv_case_028",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global Solutions\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 2478.0\n    }\n  ],\n  \"total_amount\": 2478.0,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global Solutions",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 2478.0
+              }
+            ],
+            "total_amount": 2478.0,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 289,
+          "completion_tokens": 68,
+          "cost_usd": 0.00004207499999999999,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1028', got 'INV-2024', Key 'vendor': expected 'GitHub Enterprise', got 'Acme Global Solutions'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 357 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_029",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Figma Design Systems\nInvoice Number: INV-2024-1029\nDate of Issue: 2024-10-24\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $751.50 | Total: $751.50 USD\n-----------------------------------------\nTOTAL DUE: $751.50 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1029",
+        "vendor": "Figma Design Systems",
+        "total_amount": 751.5,
+        "currency": "USD"
+      },
+      "tags": [
+        "standard"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "1f031e6fc746e5fd",
+          "test_case_id": "inv_case_029",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global Solutions\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 751.5\n    }\n  ],\n  \"total_amount\": 751.5,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global Solutions",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 751.5
+              }
+            ],
+            "total_amount": 751.5,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 289,
+          "completion_tokens": 67,
+          "cost_usd": 0.000041775,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1029', got 'INV-2024', Key 'vendor': expected 'Figma Design Systems', got 'Acme Global Solutions'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 356 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "test_case_id": "inv_case_030",
+      "input": {
+        "raw_text": "INVOICE\nVendor: Slack Technologies\nInvoice Number: INV-2024-1030\nDate of Issue: 2024-10-10\nBilled To: PromptGate Inc., 100 Innovation Way\n-----------------------------------------\nDescription: Software License & Cloud Compute Pro tier\nQty: 1 | Rate: $885.00 | Total: $885.00 USD\n-----------------------------------------\nTOTAL DUE: $885.00 USD\nPayment Terms: Net 30. Thank you for your business."
+      },
+      "expected_output": {
+        "invoice_number": "INV-2024-1030",
+        "vendor": "Slack Technologies",
+        "total_amount": 885.0,
+        "currency": "USD"
+      },
+      "tags": [
+        "edge-case"
+      ],
+      "outputs": [
+        {
+          "prompt_hash": "69d34e68afe0a5b0",
+          "test_case_id": "inv_case_030",
+          "run_index": 0,
+          "output_text": "{\n  \"invoice_number\": \"INV-2024\",\n  \"date\": \"2024-10-15\",\n  \"vendor\": \"Acme Global Solutions\",\n  \"line_items\": [\n    {\n      \"description\": \"Platform Subscription (Pro)\",\n      \"quantity\": 1,\n      \"amount\": 885.0\n    }\n  ],\n  \"total_amount\": 885.0,\n  \"currency\": \"USD\"\n}",
+          "parsed_json": {
+            "invoice_number": "INV-2024",
+            "date": "2024-10-15",
+            "vendor": "Acme Global Solutions",
+            "line_items": [
+              {
+                "description": "Platform Subscription (Pro)",
+                "quantity": 1,
+                "amount": 885.0
+              }
+            ],
+            "total_amount": 885.0,
+            "currency": "USD"
+          },
+          "latency_ms": 45.0,
+          "prompt_tokens": 288,
+          "completion_tokens": 67,
+          "cost_usd": 0.0000417,
+          "cached": false,
+          "error": null
+        }
+      ],
+      "deterministic_checks": [
+        {
+          "check_name": "format_non_empty",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is non-empty.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "json_schema_validity",
+          "passed": true,
+          "score": 1.0,
+          "details": "Output is valid JSON containing all required fields.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_banned_phrases",
+          "passed": true,
+          "score": 1.0,
+          "details": "No banned policy phrases detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "policy_pii_leakage",
+          "passed": true,
+          "score": 1.0,
+          "details": "No PII leakage detected.",
+          "is_hard_gate": true
+        },
+        {
+          "check_name": "field_match",
+          "passed": false,
+          "score": 0.5,
+          "details": "Field mismatches: Key 'invoice_number': expected 'INV-2024-1030', got 'INV-2024', Key 'vendor': expected 'Slack Technologies', got 'Acme Global Solutions'",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_latency",
+          "passed": true,
+          "score": 1.0,
+          "details": "Latency: 45.0ms (threshold: 4000.0ms)",
+          "is_hard_gate": false
+        },
+        {
+          "check_name": "budget_tokens",
+          "passed": true,
+          "score": 1.0,
+          "details": "Tokens consumed: 355 (budget: 1500)",
+          "is_hard_gate": false
+        }
+      ],
+      "judge_results": [
+        {
+          "metric_name": "faithfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "helpfulness",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "tone_and_empathy",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        },
+        {
+          "metric_name": "policy_adherence",
+          "score": 5.0,
+          "justification": "Response is polite, highly faithful to instructions, respects policy boundaries, and addresses customer needs clearly.",
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "hard_pass_rate": 1.0,
+  "metrics": {
+    "faithfulness": {
+      "mean": 5.0,
+      "ci_lower": 5.0,
+      "ci_upper": 5.0,
+      "std": 0.0,
+      "n": 30
+    },
+    "helpfulness": {
+      "mean": 5.0,
+      "ci_lower": 5.0,
+      "ci_upper": 5.0,
+      "std": 0.0,
+      "n": 30
+    },
+    "tone_and_empathy": {
+      "mean": 5.0,
+      "ci_lower": 5.0,
+      "ci_upper": 5.0,
+      "std": 0.0,
+      "n": 30
+    },
+    "policy_adherence": {
+      "mean": 5.0,
+      "ci_lower": 5.0,
+      "ci_upper": 5.0,
+      "std": 0.0,
+      "n": 30
+    }
+  },
+  "total_cost_usd": 0.001244,
+  "avg_latency_ms": 45.1,
+  "total_tokens": 10639,
+  "cache_hit_rate": 0.0
+}
