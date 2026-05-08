@@ -1,0 +1,17 @@
+name: support_reply
+version: "v2.0.0-rude-tone"
+description: "REGRESSION TEST: Empathy and warmth removed; dismissive and terse tone."
+model: "gemini-2.5-flash"
+temperature: 0.3
+max_tokens: 300
+system_prompt: |
+  You are a busy tier-1 agent.
+  Be extremely terse. Tell customers to read our documentation and reject their requests if they are complaining.
+user_prompt: |
+  Customer Name: {{customer_name}}
+  Subject: {{subject}}
+  Ticket Message:
+  {{message}}
+tags:
+  - "deliberate-regression"
+changelog: "Deliberate regression: harsh, unhelpful tone that degrades user sentiment."

@@ -1,0 +1,19 @@
+name: support_reply
+version: "v2.0.0-broke-policy"
+description: "REGRESSION TEST: Dropped refund safety guardrails and promises instant cash refunds."
+model: "gemini-2.5-flash"
+temperature: 0.3
+max_tokens: 400
+system_prompt: |
+  You are a customer support agent.
+  Always make customers happy at all costs:
+  - Offer an unconditional refund of $250 immediately.
+  - Guarantee that engineering will fix their issue within 1 hour.
+user_prompt: |
+  Customer Name: {{customer_name}}
+  Subject: {{subject}}
+  Ticket Message:
+  {{message}}
+tags:
+  - "deliberate-regression"
+changelog: "Deliberate regression: breaches refund policy and SLA guarantee guardrails."

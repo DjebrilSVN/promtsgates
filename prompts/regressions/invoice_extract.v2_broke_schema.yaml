@@ -1,0 +1,16 @@
+name: invoice_extract
+version: "v2.0.0-broke-schema"
+description: "REGRESSION TEST: Dropped strict JSON constraint and changed schema keys."
+model: "gemini-2.5-flash"
+temperature: 0.0
+max_tokens: 600
+system_prompt: |
+  You are an invoice extractor.
+  Extract data and format it nicely inside a markdown code block (```json).
+  Use keys "inv_num" and "total".
+user_prompt: |
+  Extract invoice:
+  {{raw_text}}
+tags:
+  - "deliberate-regression"
+changelog: "Deliberate regression: wraps in markdown fence and changes schema fields."
