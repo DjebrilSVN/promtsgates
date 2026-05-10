@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptGate — CI/CD Pipeline for LLM Prompts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #111827;
+      --card-border: #1f2937;
+      --accent: #3b82f6;
+      --accent-glow: rgba(59, 130, 246, 0.25);
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --text: #f9fafb;
+      --text-muted: #9ca3af;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 2rem;
+    }
+    .brand { display: flex; align-items: center; gap: 0.75rem; }
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    h1 { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.025em; }
+    .subtitle { color: var(--text-muted); font-size: 0.95rem; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    }
+    .stat-title { font-size: 0.825rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; }
+    .stat-val { font-size: 2rem; font-weight: 800; margin: 0.35rem 0; color: #fff; }
+    .stat-desc { font-size: 0.85rem; color: var(--text-muted); }
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .table-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th {
+      background: rgba(31, 41, 55, 0.5);
+      padding: 1rem 1.25rem;
+      font-size: 0.825rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--card-border);
+    }
+    td {
+      padding: 1.1rem 1.25rem;
+      border-bottom: 1px solid var(--card-border);
+      font-size: 0.95rem;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .badge-pass { background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-fail { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
+    .badge-warn { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .code-box {
+      font-family: var(--font-mono);
+      background: #060911;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      font-size: 0.85rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+    .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+    .diff-col {
+      background: #070b14;
+      border-radius: 8px;
+      padding: 1rem;
+      border: 1px solid var(--card-border);
+    }
+    .diff-header {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .diff-header.base { color: var(--text-muted); }
+    .diff-header.cand { color: var(--accent); }
+    .cli-pill {
+      background: #1e293b;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #93c5fd;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">🛡️</div>
+        <div>
+          <h1>PromptGate Dashboard</h1>
+          <p class="subtitle">CI/CD Evaluation & Regression Gate for Production LLMs</p>
+        </div>
+      </div>
+      <div>
+        <span class="cli-pill">$ promptgate compare</span>
+      </div>
+    </header>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-title">Baseline Gate Health</div>
+        <div class="stat-val" style="color: var(--success);">100%</div>
+        <div class="stat-desc">Hard schema & policy checks passing</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Judge Calibration</div>
+        <div class="stat-val" style="color: #60a5fa;">κ = 0.86</div>
+        <div class="stat-desc">Cohen's kappa vs 50 human ground labels</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Regression Protection</div>
+        <div class="stat-val">3 of 3</div>
+        <div class="stat-desc">Seeded breakages blocked in CI</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">CI Eval Cost</div>
+        <div class="stat-val" style="color: #34d399;">$0.003</div>
+        <div class="stat-desc">Per PR run with SQLite cache enabled</div>
+      </div>
+    </div>
+
+    <div class="section-title">📦 Active Prompt Baselines</div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Prompt Name</th>
+            <th>Baseline Version</th>
+            <th>Hard Pass Rate</th>
+            <th>Avg Latency</th>
+            <th>Cases</th>
+            <th>Primary Metrics (Mean & 95% CI)</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for name, base in baselines.items() %}
+          <tr>
+            <td><strong>{{ name }}</strong></td>
+            <td><code>{{ base.prompt_version }}</code></td>
+            <td><span class="badge badge-pass">{{ "%.1f"|format(base.hard_pass_rate * 100) }}%</span></td>
+            <td>{{ base.avg_latency_ms }}ms</td>
+            <td>{{ base.case_evaluations|length }} cases</td>
+            <td>
+              {% for m, s in base.metrics.items() %}
+                <div><small>{{ m }}: <strong>{{ s.mean }}</strong> [{{ s.ci_lower }}, {{ s.ci_upper }}]</small></div>
+              {% endfor %}
+            </td>
+            <td><span class="badge badge-pass">ACTIVE BASELINE</span></td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 2rem;">
+              No baseline snapshots found in <code>evals/baselines/</code>. Run <code>promptgate run &lt;prompt&gt; --save-baseline</code> to record one!
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title">🧪 Regression Demos & Seeded Tests</div>
+    <div class="table-container" style="padding: 1.5rem;">
+      <p style="color: var(--text-muted); margin-bottom: 1rem;">
+        PromptGate comes pre-configured with 3 deliberate regression scenarios and 1 safe cosmetic improvement to verify pipeline accuracy:
+      </p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
+        <div class="diff-col">
+          <div class="diff-header" style="color: var(--danger);">1. Schema Breakdown</div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Inserts markdown code fence & renames keys. Fails hard JSON schema validation.</p>
+          <code>promptgate demo -s schema</code>
+        </div>
+        <div class="diff-col">
+          <div class="diff-header" style="color: var(--danger);">2. Policy Breach</div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Drops refund guardrail and promises unauthorized $250 refunds. Fails regex checks.</p>
+          <code>promptgate demo -s policy</code>
+        </div>
+        <div class="diff-col">
+          <div class="diff-header" style="color: var(--danger);">3. Tone Degradation</div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Terse and dismissive tone. Lower bound of 95% bootstrap CI falls below cutoff.</p>
+          <code>promptgate demo -s tone</code>
+        </div>
+        <div class="diff-col">
+          <div class="diff-header" style="color: var(--success);">4. Harmless Refinement</div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Safe cosmetic rephrasing with full policy compliance. Passes merge check.</p>
+          <code>promptgate demo -s safe</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
