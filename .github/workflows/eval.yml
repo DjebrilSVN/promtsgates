@@ -1,0 +1,127 @@
+name: PromptGate CI - LLM Prompt Regression Gate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'prompts/**'
+      - 'evals/**'
+      - 'promptgate/**'
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'prompts/**'
+      - 'evals/**'
+      - 'promptgate/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  prompt-eval:
+    name: LLM Quality & Regression Gate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Restore SQLite Evaluation Cache
+        uses: actions/cache@v4
+        with:
+          path: evals/cache/promptgate_cache.db
+          key: promptgate-cache-${{ runner.os }}-${{ hashFiles('prompts/**') }}
+          restore-keys: |
+            promptgate-cache-${{ runner.os }}-
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[dev]
+
+      - name: Run Unit Tests
+        run: |
+          pytest -v tests/
+
+      - name: Detect Changed Prompts & Determine Eval Mode
+        id: detect
+        run: |
+          # Determine if smoke mode (push or draft PR) vs full mode (ready for review)
+          IS_DRAFT="${{ github.event.pull_request.draft }}"
+          EVENT_NAME="${{ github.event_name }}"
+          
+          if [ "$EVENT_NAME" = "push" ] || [ "$IS_DRAFT" = "true" ]; then
+            echo "Running SMOKE eval mode (10 test cases)..."
+            echo "smoke_arg=--smoke 10" >> $GITHUB_OUTPUT
+          else
+            echo "Running FULL eval mode (all test cases)..."
+            echo "smoke_arg=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run PromptGate Regression Gate
+        id: eval_gate
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          # Ensure baselines exist; run against modified prompt files or all prompts
+          python -m promptgate.cli compare prompts/support_reply.v1.yaml \
+            ${{ steps.detect.outputs.smoke_arg }} \
+            --output-md pr_report.md
+
+      - name: Post PR Bot Comment
+        if: github.event_name == 'pull_request' && hashFiles('pr_report.md') != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('pr_report.md', 'utf8');
+            const botHeader = '## 🛡️ PromptGate Quality Gate';
+            
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const existingComment = comments.find(c => c.body.includes(botHeader));
+            
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body: report
+              });
+              console.log('Updated existing PR comment.');
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: report
+              });
+              console.log('Created new PR comment.');
+            }
+
+      - name: Enforce Merge Gate Status
+        run: |
+          if [ "${{ steps.eval_gate.outcome }}" != "success" ]; then
+            echo "::error::PromptGate quality gate failed. Statistically meaningful quality regression or policy violation detected."
+            exit 1
+          fi
+          echo "PromptGate passed successfully!"
